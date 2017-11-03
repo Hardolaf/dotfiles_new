@@ -5,7 +5,7 @@
 " Setting up Vundle - the vim plugin bundler
     let iCanHazVundle=1
 
-    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+    let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 
     if !filereadable(vundle_readme)
         echo "Installing Vundle.."
