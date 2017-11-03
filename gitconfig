@@ -1,3 +1,7 @@
 [user]
 	email = joseph.d.warner@hardolaf.com
 	name = Joseph Warner
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[url "ssh://git@bitbucket.org/"]
+	insteadOf = https://bitbucket.org/
