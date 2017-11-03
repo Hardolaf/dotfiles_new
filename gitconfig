@@ -1,7 +1,10 @@
 [user]
 	email = joseph.d.warner@hardolaf.com
 	name = Joseph Warner
+	signingkey = 5328242CF01F58D5
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [url "ssh://git@bitbucket.org/"]
 	insteadOf = https://bitbucket.org/
+[commit]
+	gpgsign = true
