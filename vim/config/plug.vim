@@ -68,5 +68,11 @@ call plug#begin('~/.vim/plugged')
   "" Project discovery
   Plug 'airblade/vim-rooter'
 
+  " Vim devicons
+  Plug 'ryanoasis/vim-devicons'
+
+  " Syntax highlighting for NERDTree
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 filetype plugin indent on " required
 call plug#end()
