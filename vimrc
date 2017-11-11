@@ -20,7 +20,7 @@ source ~/.vim/config/plug.vim
 " ----------------------------------------------------------------------
 
 " Set the leader key
-" let mapleader = '\<Space>'
+let mapleader = "\<Space>"
 " set notimeout
 
 " Setup all files to be treated as UTF-8 by default
@@ -119,7 +119,6 @@ set list
 "" Open splits below and to the right
 set splitbelow
 set splitright
-
 
 " Function to trim trailing white space
 function! StripTrailingWhitespaces()
@@ -241,6 +240,113 @@ nmap <silent> <Leader>d :YcmCompleter GoToDefinition<CR>
 
 " Clear search highlights
 nnoremap <leader><space> :nohlsearch<cr>
+
+" }}}-------------------------------------------------------------------------
+"   Configure My Plugins                                                  {{{
+" ----------------------------------------------------------------------------
+
+" Jump thought errors with :lnext and :lprev
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Return to last edit position when opening files, except git commit message
+autocmd BufReadPost *
+  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+
+" Ctrl-P
+let g:ctrlp_working_path_mode = 'rw'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|sass-cache|pip_download_cache|wheel_cache)$',
+  \ 'file': '\v\.(png|jpg|jpeg|gif|DS_Store|pyc)$',
+  \ 'link': '',
+  \ }
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_clear_cache_on_exit = 0
+" Wait to update results (This should fix the fact that backspace is so slow)
+let g:ctrlp_lazy_update = 1
+" Show as many results as our screen will allow
+let g:ctrlp_match_window = 'max:1000'
+
+" CtrlP like mapings for opening quick fixes in new splits
+let g:qfenter_vopen_map = ['<C-v>']
+let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>']
+let g:qfenter_topen_map = ['<C-t>']
+
+" }}}-------------------------------------------------------------------------
+"   Custom filetypes                                                      {{{
+" ----------------------------------------------------------------------------
+
+" Auto detect filetype
+autocmd BufRead,BufNewFile *.md,*.markdown set filetype=markdown
+autocmd BufRead,BufNewFile *.lytex set filetype=tex
+autocmd BufRead,BufNewFile ~/dotfiles/ssh/config set filetype=sshconfig
+autocmd BufRead,BufNewFile *.git/config,.gitconfig,.gitmodules,gitconfig set ft=gitconfig
+autocmd BufNewFile,BufRead *.html set filetype=htmldjango
+autocmd BufNewFile,BufRead .eslintrc set filetype=javascript
+autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
+
+" Override what is done in /vim/bundle/scss-syntax.vim/ftdetect/scss.vim
+" This should prevent duplicate snippets
+autocmd BufRead,BufNewFile *.scss set filetype=scss
+
+
+" }}}-------------------------------------------------------------------------
+"   Custom mappings                                                       {{{
+" ----------------------------------------------------------------------------
+
+" When pasting, refill the default register with what you just pasted
+xnoremap p pgvy
+
+" Repurpose arrow keys to navigating windows
+nnoremap <left> <C-w>h
+nnoremap <right> <C-w>l
+nnoremap <up> <C-w>k
+nnoremap <down> <C-w>j
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" To encourage the use of <C-[np]> instead of the arrow keys in ex mode, remap
+" them to use <Up/Down> instead so that they will filter completions
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Navigate using displayed lines not actual lines
+nnoremap j gj
+nnoremap k gk
+
+" Make Y consistent with D
+nnoremap Y y$
+
+" Reselect visual block after indent/outdent: http://vimbits.com/bits/20
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+" Seems to have a problem where Vim sees that the file has changed and tries to
+" reload it. When it does it thinks the file is blank (but it's not really).
+cmap w!! %!sudo tee > /dev/null %
+
+" Nobody ever uses "Ex" mode, and it's annoying to leave
+noremap Q <nop>
+
+" }}}-------------------------------------------------------------------------
+"   Undo, Backup and Swap file locations                                  {{{
+" ----------------------------------------------------------------------------
+
+" Don't leave .swp files everywhere. Put them in a central place
+set directory=$HOME/.vim/swapdir//
+set backupdir=$HOME/.vim/backupdir//
+if exists('+undodir')
+    set undodir=$HOME/.vim/undodir
+    set undofile
+endif
 
 " Set up rooter for finding the root of the root of every project
 "" Resolve symbolic links
