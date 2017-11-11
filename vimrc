@@ -252,6 +252,11 @@ set guifont=Inconsolata\ Nerd\ Font\ Complete\ 11
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+" Tell Syntastic to use vim-hdl
+let g:syntastic_vhdl_checkers = ['vimhdl']
+
+" Configure the vim-hdl project file (use ghdl by default)
+let g:vimhdl_conf_file = 'ghdl.conf'
 
 " Highlight full names, not just icons in NERDTree
 let g:NERDTreeFileExtensionHighlightFullName = 1
