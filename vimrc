@@ -43,7 +43,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/emmet-vim', { 'for': 'html' }
 
   " Make % match xml tags
-  Plug 'tmhedberg/vim-matchit', { 'for': ['html', 'xml'] }
+  Plug 'tmhedberg/matchit', { 'for': ['html', 'xml'] }
 
   " Make tab handle all completions
   Plug 'ervandew/supertab'
@@ -118,9 +118,5 @@ let g:rooter_patterns = ['Rakefile', '.git', '.git/', '.svn']
 
 "" Automatically set current working directory
 autocmd BufEnter * :Rooter
-
-" Always install plugins on launch
-autocmd VimEnter * PlugUpdate --sync
-
 
 
