@@ -159,16 +159,97 @@ set printoptions=header:0,duplex:long,paper:letter,syntax:n
 " duplex:long (default)     Print on both sides (when possible), bind on long
 " syntax:n                  Do not use syntax highlighting.
 
+" }}}-------------------------------------------------------------------------
+"   Style for terminal vim
+" ----------------------------------------------------------------------------
 
+" Don't show the airline separators
+" The angle bracket defaults look fugly
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
+let g:airline_powerline_fonts=0
+set mouse+=a  " Add mouse support for 'all' modes, may require iTerm
+if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+endif
+
+" }}}-------------------------------------------------------------------------
+"   Search                                                                {{{
+" ----------------------------------------------------------------------------
+
+" Show search results as we type
+set incsearch
+" Show matching brackets
+set showmatch
+" Highlight search results
+set hlsearch
+
+" Use regex for searches
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
+" Ignore case when searching
+set ignorecase
+" Don't ignore case if we have a capital letter
+set smartcase
+
+" }}}-------------------------------------------------------------------------
+"   Tabs                                                                  {{{
+" ----------------------------------------------------------------------------
+
+" Show a tab as four spaces
+set tabstop=4
+" Reindent is also four spaces
+set shiftwidth=4
+" When hit <tab> use four columns
+set softtabstop=4
+" Create spaces when I type <tab>
+set expandtab
+" Round indent to multiple of 'shiftwidth'.
+set shiftround
+" Put my cursor in the right place when I start a new line
+set autoindent
+" Rely on file plugins to handle indenting
+filetype plugin indent on
+
+" }}}-------------------------------------------------------------------------
+"   Custom commands                                                       {{{
+" ----------------------------------------------------------------------------
+
+" Faster save/quite/close
+nmap <silent> <Leader>w :update<CR>
+nmap <silent> <Leader>q :quit<CR>
+nmap <silent> <Leader>c :bdelete<CR>
+nmap <silent> <Leader>n :cnext<CR>
+nmap <silent> <Leader>p :cprevious<CR>
+
+" Trim trailing white space
+nmap <silent> <Leader>t :call StripTrailingWhitespaces()<CR>
+
+" Move current window to the far left using full height
+nmap <silent> <Leader>h <C-w>H
+" Move current window to the far right using full height
+nmap <silent> <Leader>l <C-w>L
+" Move current window to the top using full width
+nmap <silent> <Leader>k <C-w>K
+" Move current window to the bottom using full width
+nmap <silent> <Leader>j <C-w>J
+
+nmap <silent> <Leader>d :YcmCompleter GoToDefinition<CR>
+
+" Clear search highlights
+nnoremap <leader><space> :nohlsearch<cr>
 
 " Set up rooter for finding the root of the root of every project
 "" Resolve symbolic links
 let g:rooter_resolve_links = 1
 "" Patterns to identify the root directory
-let g:rooter_patterns = ['Rakefile', '.git', '.git/', '.svn']
+let g:rooter_patterns = ['Rakefile', '.git', '.git/', '.svn/']
 
 "" Automatically set current working directory
 autocmd BufEnter * :Rooter
 
-" }}}
+" }}}-------------------------------------------------------------------------
 
