@@ -275,6 +275,15 @@ let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_topen_map = ['<C-t>']
 
+" Set up rooter for finding the root of the root of every project
+"" Resolve symbolic links
+let g:rooter_resolve_links = 1
+"" Patterns to identify the root directory
+let g:rooter_patterns = ['Rakefile', '.git', '.git/', '.svn/']
+
+"" Automatically set current working directory
+autocmd BufEnter * :Rooter
+
 " }}}-------------------------------------------------------------------------
 "   Custom filetypes                                                      {{{
 " ----------------------------------------------------------------------------
@@ -348,14 +357,20 @@ if exists('+undodir')
     set undofile
 endif
 
-" Set up rooter for finding the root of the root of every project
-"" Resolve symbolic links
-let g:rooter_resolve_links = 1
-"" Patterns to identify the root directory
-let g:rooter_patterns = ['Rakefile', '.git', '.git/', '.svn/']
+" }}}-------------------------------------------------------------------------
+"   If there is a per-machine local .vimrc, source it here at the end     {{{
+" ----------------------------------------------------------------------------
 
-"" Automatically set current working directory
-autocmd BufEnter * :Rooter
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
+" }}}-------------------------------------------------------------------------
+"                                                                         {{{
+" ----------------------------------------------------------------------------
+
+set exrc
+set secure
 
 " }}}-------------------------------------------------------------------------
 
